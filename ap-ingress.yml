@@ -1,0 +1,18 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ap01
+  namespace: rt
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location ~ "^/(.*)" {
+        proxy_pass http://10.101.10.2:80;
+      }
+spec:
+  rules:
+  - host: ap01.gpastor.net
+  tls:
+  - hosts:
+    - ap01.gpastor.net
+    secretName: gpastor-wildcard 
